@@ -3,9 +3,15 @@ package com.wildcodeschool.myProjectWithDB.controllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.wildcodeschool.myProjectWithDB.entities.School;
+import com.wildcodeschool.myProjectWithDB.repositories.SchoolRepository;
+
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -59,62 +65,21 @@ public class SchoolController {
         }
     }
 
-    class School {
-
-        private int id;
-        private String name;
-        private double capacity;
-        private String country;
-        
-        
-		public School(int id, String name, double capacity, String country) {
-			super();
-			this.id = id;
-			this.name = name;
-			this.capacity = capacity;
-			this.country = country;
-		}
-
-
-		public int getId() {
-			return id;
-		}
-
-
-		public void setId(int id) {
-			this.id = id;
-		}
-
-
-		public String getName() {
-			return name;
-		}
-
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-
-		public double getCapacity() {
-			return capacity;
-		}
-
-
-		public void setCapacity(double capacity) {
-			this.capacity = capacity;
-		}
-
-
-		public String getCountry() {
-			return country;
-		}
-
-
-		public void setCountry(String country) {
-			this.country = country;
-		}
-
-
+    @PostMapping("/api/schools")
+    @ResponseStatus(HttpStatus.CREATED)
+    public School store(
+        @RequestParam String name,
+        @RequestParam (required = false, name = "capacity") int capacity,
+        @RequestParam String country
+    ) {
+    	int idGeneratedByInsertion = SchoolRepository.insert(
+    		    name,
+    		    capacity,
+    		    country
+    		);
+    		return SchoolRepository.selectById(
+    		    idGeneratedByInsertion
+    		);
     }
+
 }
