@@ -134,7 +134,33 @@ public class SchoolRepository {
     		    );
     		}
     	}
+    public static int update(
+    	    int id,
+    	    String name,
+    	    Integer capacity,
+    	    String country
+    	) {
+    	try(
+    		    Connection connection = DriverManager.getConnection(
+    		        DB_URL, DB_USER, DB_PASSWORD
+    		    );
+    		    PreparedStatement statement = connection.prepareStatement(
+    		        "UPDATE school SET name=?, capacity=?, country=? WHERE id=?"
+    		    );
+    		) {
+    		statement.setString(1, name);
+    		statement.setInt(2, capacity);
+    		statement.setString(3, country);
+    		statement.setInt(4, id);
 
+    		return statement.executeUpdate();
+    		}
+    		catch (SQLException e) {
+    		    throw new ResponseStatusException(
+    		        HttpStatus.INTERNAL_SERVER_ERROR, "", e
+    		    );
+    		}
+    	} 
 }
 
 
