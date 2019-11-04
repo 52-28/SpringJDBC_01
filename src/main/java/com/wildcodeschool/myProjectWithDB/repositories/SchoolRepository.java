@@ -18,8 +18,8 @@ import com.wildcodeschool.myProjectWithDB.entities.School;
 public class SchoolRepository {
 
     private final static String DB_URL = "jdbc:mysql://localhost:3306/wild_db_quest?serverTimezone=GMT";
-    private final static String DB_USER = "root";
-    private final static String DB_PASSWORD = "Imeo17D%";
+    private final static String DB_USER = "h4rryp0tt3r";
+    private final static String DB_PASSWORD = "Horcrux4life!";
 
     public static List<School> selectByLastname(String lastname) {
         try(
